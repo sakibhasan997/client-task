@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.banner-img{
+    background-image: url('/src/assets/pexels-craig-adderley-1563356.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+ul a.active{
+    background-color: aliceblue;
+    color: blue;
+    font-weight: 700;
+}
