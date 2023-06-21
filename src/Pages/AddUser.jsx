@@ -32,21 +32,21 @@ const AddUser = () => {
     return (
         <>
             <NavBar />
-            <div className='py-24'>
+            <div className='py-28'>
                 <div className='flex justify-center'>
                     <span className='bg-gradient-to-r from-cyan-200 to-blue-100 p-20 rounded-xl shadow-xl'>
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <h3 className='text-center font-bold text-2xl text-primary'>ADD NEW USER</h3>
                             <label className="label">
-                                <span className="label-text">Name*</span>
+                                <span className="label-text">Name<span className='text-red-600'>*</span> </span>
                             </label>
                             <input className="input input-bordered w-[600px]" type="text" {...register("name", { required: true })} placeholder='Your Name' />
                             <label className="label">
-                                <span className="label-text">Email*</span>
+                                <span className="label-text">Email<span className='text-red-600'>*</span></span>
                             </label>
                             <input className="input input-bordered w-[600px]" type="email" {...register("email", { required: true })} placeholder='Your Email' />
                             <label className="label">
-                                <span className="label-text">Phone Number*</span>
+                                <span className="label-text">Phone Number<span className='text-red-600'>*</span></span>
                             </label>
                             <input className="input input-bordered w-[600px]" type='number' {...register("phoneNumber", { required: true })} placeholder='Your Number' />
                             <br />

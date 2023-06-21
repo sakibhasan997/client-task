@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
-import Modal from '../Modal/Modal';
+import Swal from 'sweetalert2';
 
 const AllUsers = () => {
     const [users, setUsers] = useState([]);
-    const [modalShow, setModalShow] = React.useState(false);
 
     useEffect(() => {
         fetch(`http://localhost:5000/users`)
@@ -15,21 +14,41 @@ const AllUsers = () => {
             })
     }, [])
 
-    const handleUpdate = (data) => {
-        console.log(data);
-        fetch(`http://localhost:5000/updateUser/${data._id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
-        })
-            .then((res) => res.json())
-            .then((result) => {
-                if (result.modifiedCount > 0) {
-                    // setControl(!control);
-                }
-                console.log(result);
-            });
+    // Delete the user
+    const handleDelete = id =>{
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                    fetch(`http://localhost:5000/users/${id}`,{
+                        method: 'DELETE'
+                    })
+                    .then(res =>res.json())
+                    .then(data =>{
+                        console.log(data);
+                        if(data.deletedCount > 0){
+                            Swal.fire(
+                                'Deleted!',
+                                'User has been deleted.',
+                                'success'
+                              )
+                            const remaining = users.filter(user => user._id !== id);
+                            setUsers(remaining);
+                        }
+                    })
+            }
+          })
+        
+        
     }
+
+    
 
     return (
         <>
@@ -60,16 +79,12 @@ const AllUsers = () => {
                                         <td>{user.email}</td>
                                         <td>{user.phoneNumber}</td>
                                         <td>
-                                            <button className="btn btn-outline btn-primary btn-sm" onClick={() => window.my_modal_3.showModal()}><FaRegEdit /></button>
-
-                                            {/* <button className="btn" onClick={() =>setModalShow(true)}>open modal</button>
-                                            <Modal
-                                            show={modalShow}
-                                            onHide={() => setModalShow(false)}
-                                            /> */}
+                                            <Link to={`/updateUser/${user._id}`}>
+                                                <button className="btn btn-outline btn-primary btn-sm"><FaRegEdit /></button>
+                                            </Link>
                                         </td>
                                         <td>
-                                            <button className="btn btn-outline btn-error btn-sm"><FaRegTrashAlt /></button>
+                                            <button onClick={() => handleDelete(user._id)} className="btn btn-outline btn-error btn-sm"><FaRegTrashAlt /></button>
                                         </td>
                                     </tr>)
                                 }
@@ -78,26 +93,8 @@ const AllUsers = () => {
 
                         </table>
                     </div>
-                    {/* {
-                        users.map((user, index) => )
-                         to={`/updateToys/${_id}`}
-                         onClick={() => handleDelete(_id)}
-                    } */}
                 </div>
             </div>
-            <Modal 
-            handleUpdate={handleUpdate}
-            />
-            {/* <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-                <form method="dialog" className="modal-box">
-                    <h3 className="font-bold text-lg">Hello!</h3>
-                    <p className="py-4">Press ESC key or click the button below to close</p>
-                    <div className="modal-action">
-                        if there is a button in form, it will close the modal
-                        <button className="btn">Close</button>
-                    </div>
-                </form>
-            </dialog> */}
         </>
     );
 };

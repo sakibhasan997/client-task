@@ -10,7 +10,7 @@
 }
 
 ul a.active{
-    background-color: aliceblue;
-    color: blue;
+    background-color: #fff;
+    color: red;
     font-weight: 700;
 }

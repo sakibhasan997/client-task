@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Home from './Pages/Home.jsx';
 import AddUser from './Pages/AddUser';
+import Modal from './Modal/Modal';
 
 
 const router = createBrowserRouter([
@@ -17,6 +18,11 @@ const router = createBrowserRouter([
   {
     path: '/addUser',
     element: <AddUser />
+  },
+  {
+    path: '/updateUser/:id',
+    element: <Modal/>,
+    loader: ({params}) => fetch(`http://localhost:5000/users/${params.id}`)
   }
 ]);
 
