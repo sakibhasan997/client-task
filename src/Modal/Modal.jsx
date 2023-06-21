@@ -12,7 +12,7 @@ const Modal = () => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = data => {
         
-        fetch(`http://localhost:5000/updateUser/${_id}`, {
+        fetch(`https://user-management-server-side.vercel.app/updateUser/${_id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),

@@ -8,7 +8,7 @@ const AddUser = () => {
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = data => {
-        fetch("http://localhost:5000/addusers", {
+        fetch("https://user-management-server-side.vercel.app/addusers", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
